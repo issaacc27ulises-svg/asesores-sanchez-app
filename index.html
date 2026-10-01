@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class="h-full bg-slate-900 font-sans antialiased">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asesores Contables Sánchez | Asesoría Contable Confiable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Asesores Contables Sánchez App</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font Inter -->
+    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
                             500: '#10b981',
                             600: '#059669',
                             700: '#047857',
                             900: '#064e3b',
                         },
-                        corpBlue: {
-                            500: '#2563eb',
-                            600: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
                         }
                     },
                     fontFamily: {
@@ -39,721 +35,538 @@
         }
     </script>
     <style>
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(229, 231, 235, 0.8);
+        /* Custom Native Mobile Styling and Screen Transitions */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        .dark .glass-panel {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(51, 65, 85, 0.8);
+
+        /* Screen visibility and slide transition */
+        .app-screen {
+            display: none;
+            opacity: 0;
+            transform: translateX(12px);
+            transition: opacity 0.22s ease-out, transform 0.22s ease-out;
         }
-        .custom-gradient {
-            background: linear-gradient(135deg, #059669 0%, #1e40af 100%);
+        .app-screen.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Hide scrollbars for clean app look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Phone frame simulation styles */
+        .device-container {
+            max-width: 430px;
+            height: 100vh;
+            max-height: 880px;
+        }
+        @media (min-width: 640px) {
+            .device-container {
+                height: 860px;
+                border-radius: 40px;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 12px #1e293b;
+            }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+<body class="h-full bg-slate-950 flex items-center justify-center p-0 sm:p-4 overflow-hidden">
 
-    <!-- HEADER & NAVIGATION -->
-    <header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/80 shadow-sm transition-all duration-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToSection('hero')">
-                <div class="w-11 h-11 rounded-xl custom-gradient flex items-center justify-center text-white shadow-md shadow-emerald-600/20">
-                    <i class="fa-solid fa-calculator text-xl"></i>
+    <div class="device-container w-full bg-slate-50 text-slate-800 flex flex-col relative overflow-hidden">
+
+        <!-- Top Native Phone Status Bar -->
+        <div class="bg-slate-900 text-white px-5 py-1.5 flex justify-between items-center text-xs font-semibold z-50 shrink-0">
+            <span id="current-time">09:41</span>
+            <div class="w-16 h-4 bg-slate-950 rounded-full mx-auto hidden sm:block"></div>
+            <div class="flex items-center gap-2 text-slate-300 text-[11px]">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full text-emerald-400"></i>
+            </div>
+        </div>
+
+        <!-- App Top Navigation Bar -->
+        <header class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between border-b border-slate-800 shrink-0 shadow-md z-40">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white flex items-center justify-center font-black text-base shadow-sm">
+                    ACS
                 </div>
                 <div>
-                    <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 to-corpBlue-800 bg-clip-text text-transparent">ACS</span>
-                    <span class="block text-xs font-semibold text-slate-500 -mt-1 tracking-wider uppercase">Asesores Contables Sánchez</span>
+                    <h1 class="font-bold text-sm tracking-tight leading-tight">Asesores Contables Sánchez</h1>
+                    <p class="text-[10px] text-emerald-400 font-medium tracking-wide">asesoria contable confiable</p>
                 </div>
             </div>
+            <button onclick="switchScreen('contacto')" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition">
+                <i class="fa-regular fa-bell text-xs"></i>
+            </button>
+        </header>
 
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
-                <button onclick="scrollToSection('evaluador')" class="hover:text-emerald-600 transition">Check Gastos SAT</button>
-                <button onclick="scrollToSection('calculadora')" class="hover:text-emerald-600 transition">Calculadora Impuestos</button>
-                <button onclick="scrollToSection('tramites')" class="hover:text-emerald-600 transition">Trámites Exprés</button>
-                <button onclick="scrollToSection('despliegue')" class="hover:text-emerald-600 transition">Hosting Gratis ($0 MXN)</button>
-            </nav>
+        <main id="main-content" class="flex-1 overflow-y-auto no-scrollbar p-4 relative pb-24">
 
-            <div class="flex items-center space-x-3">
-                <a href="https://wa.me/5215500000000?text=Hola%2C%20quisiera%20cotizar%20la%20contabilidad%20mensual%20de%20mi%20negocio." target="_blank" class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition shadow-md shadow-emerald-600/20 space-x-2">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>Cotizar Contabilidad</span>
-                </a>
-                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 text-slate-600 hover:text-emerald-600 rounded-lg">
-                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white/95 px-4 pt-3 pb-6 space-y-3">
-            <button onclick="scrollToSection('evaluador'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-700 font-medium">Check Gastos SAT</button>
-            <button onclick="scrollToSection('calculadora'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-700 font-medium">Calculadora Impuestos</button>
-            <button onclick="scrollToSection('tramites'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-700 font-medium">Trámites Exprés</button>
-            <button onclick="scrollToSection('despliegue'); toggleMobileMenu()" class="block w-full text-left py-2 text-slate-700 font-medium">Guía Hosting $0 MXN</button>
-            <a href="https://wa.me/5215500000000?text=Hola%2C%20quisiera%20cotizar%20la%20contabilidad%20mensual%20de%20mi%20negocio." target="_blank" class="flex items-center justify-center w-full py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 space-x-2">
-                <i class="fa-brands fa-whatsapp"></i>
-                <span>Cotizar Contabilidad WhatsApp</span>
-            </a>
-        </div>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section id="hero" class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-emerald-50/50 via-white to-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto space-y-6">
-                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-semibold">
-                    <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-                    <span>Asesoría Contable Confiable &amp; Trámites Digitales</span>
-                </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                    Optimiza tus Impuestos y Realiza Trámites del SAT <span class="bg-gradient-to-r from-emerald-600 to-corpBlue-600 bg-clip-text text-transparent">sin Complicaciones</span>
-                </h1>
-                <p class="text-lg text-slate-600 font-normal leading-relaxed">
-                    Obtén soluciones contables inmediatas, evalúa la deducibilidad de tus gastos, calcula tu estimación mensual de impuestos o gestiona tus trámites fiscales en minutos.
-                </p>
-                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button onclick="scrollToSection('evaluador')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-lg shadow-emerald-600/25 transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i>
-                        <span>Evaluar Mis Gastos Gratis</span>
-                    </button>
-                    <button onclick="scrollToSection('tramites')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm shadow-md transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-file-invoice"></i>
-                        <span>Solicitar Trámite SAT</span>
-                    </button>
-                </div>
-                <!-- STATS BAR -->
-                <div class="pt-10 grid grid-cols-2 md:grid-cols-4 gap-4 text-center border-t border-slate-200/80">
-                    <div>
-                        <p class="text-2xl font-extrabold text-emerald-600">100%</p>
-                        <p class="text-xs text-slate-500 font-medium">Digital &amp; Seguro</p>
-                    </div>
-                    <div>
-                        <p class="text-2xl font-extrabold text-corpBlue-600">En 24 Hrs</p>
-                        <p class="text-xs text-slate-500 font-medium">Entrega de Trámites</p>
-                    </div>
-                    <div>
-                        <p class="text-2xl font-extrabold text-slate-800">RESICO / P.F.</p>
-                        <p class="text-xs text-slate-500 font-medium">Especialistas Fiscales</p>
-                    </div>
-                    <div>
-                        <p class="text-2xl font-extrabold text-emerald-600">$0 MXN</p>
-                        <p class="text-xs text-slate-500 font-medium">Costo de Hosting</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT CONTAINERS -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20 w-full">
-
-        <!-- MÓDULO A: EVALUADOR DE FACTURABILIDAD -->
-        <section id="evaluador" class="scroll-mt-24">
-            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/80">
-                <div class="max-w-2xl mb-8">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-md">Herramienta Interactiva</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Check de Gastos Deducibles ante el SAT</h2>
-                    <p class="text-sm text-slate-600 mt-1">Descubre si la factura de tu compra es 100% deducible y evita observaciones del SAT.</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Form Controls -->
-                    <div class="lg:col-span-6 space-y-5">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">1. Selecciona tu Régimen Fiscal</label>
-                            <select id="eval-regimen" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-medium focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
-                                <option value="RESICO">RESICO (Régimen Simplificado de Confianza)</option>
-                                <option value="ACT_EMP">Actividad Empresarial y Servicios Profesionales</option>
-                                <option value="SUELDOS">Sueldos y Salarios (Asimilados)</option>
-                                <option value="ARRENDAMIENTO">Arrendamiento de Inmuebles</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">2. Categoría del Gasto o Compra</label>
-                            <select id="eval-categoria" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-medium focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
-                                <option value="gasolina">Gasolina y Combustibles</option>
-                                <option value="equipo">Equipo de Cómputo / Herramientas de Trabajo</option>
-                                <option value="restaurantes">Alimentos y Consumo en Restaurantes</option>
-                                <option value="medicos">Honorarios Médicos / Dentales / Salud</option>
-                                <option value="viajes">Hospedaje y Gastos de Viaje</option>
-                                <option value="renta">Renta de Local u Oficina</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">3. Forma de Pago Utilizada</label>
-                            <div class="grid grid-cols-3 gap-3">
-                                <label class="cursor-pointer border border-slate-200 rounded-xl p-3 text-center bg-slate-50 hover:bg-emerald-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
-                                    <input type="radio" name="eval-pago" value="efectivo" class="hidden" checked>
-                                    <i class="fa-solid fa-money-bill-wave text-base block mb-1"></i>
-                                    <span class="text-xs font-semibold">Efectivo</span>
-                                </label>
-                                <label class="cursor-pointer border border-slate-200 rounded-xl p-3 text-center bg-slate-50 hover:bg-emerald-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
-                                    <input type="radio" name="eval-pago" value="tarjeta" class="hidden">
-                                    <i class="fa-solid fa-credit-card text-base block mb-1"></i>
-                                    <span class="text-xs font-semibold">T. Débito / Crédito</span>
-                                </label>
-                                <label class="cursor-pointer border border-slate-200 rounded-xl p-3 text-center bg-slate-50 hover:bg-emerald-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
-                                    <input type="radio" name="eval-pago" value="transferencia" class="hidden">
-                                    <i class="fa-solid fa-building-columns text-base block mb-1"></i>
-                                    <span class="text-xs font-semibold">SPEI / Cheque</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <button onclick="calcularDeductibilidad()" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-calculator"></i>
-                            <span>Evaluar Deductibilidad</span>
+            <!-- PANTALLA 1: INICIO / DASHBOARD -->
+            <section id="screen-inicio" class="app-screen active space-y-4">
+                <!-- Welcome Card -->
+                <div class="bg-gradient-to-br from-slate-900 via-navy-800 to-emerald-900 rounded-2xl p-4 text-white shadow-md relative overflow-hidden">
+                    <div class="relative z-10 space-y-2">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                            <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping mr-1"></span> Portal Digital Manzanillo
+                        </span>
+                        <h2 class="text-base font-extrabold leading-snug">Soluciones Fiscales y Trámites al Instante</h2>
+                        <p class="text-slate-300 text-xs">Calcula impuestos, gestiona documentos y valida tus facturas en segundos.</p>
+                        <button onclick="switchScreen('tramites')" class="mt-2 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-bolt"></i> Solicitar Trámite Express
                         </button>
                     </div>
-
-                    <!-- Result Panel -->
-                    <div class="lg:col-span-6 bg-slate-900 text-white rounded-2xl p-6 flex flex-col justify-between shadow-inner">
-                        <div>
-                            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Dictamen Preliminar</span>
-                                <span id="eval-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Deducible</span>
-                            </div>
-
-                            <h3 id="eval-titulo" class="text-xl font-bold text-white mb-2">Gasto Parcialmente Deducible</h3>
-                            <p id="eval-descripcion" class="text-xs text-slate-300 leading-relaxed mb-4">
-                                Selecciona las opciones a la izquierda para obtener un desglose técnico detallado sobre el uso del CFDI y normatividad vigente.
-                            </p>
-
-                            <div class="space-y-3 text-xs bg-slate-800/80 p-4 rounded-xl border border-slate-700/60">
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">Uso CFDI Recomendado:</span>
-                                    <span id="eval-cfdi" class="font-bold text-emerald-400">G03 - Gastos en general</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">Riesgo de Rechazo SAT:</span>
-                                    <span id="eval-riesgo" class="font-bold text-amber-400">Bajo</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">Fundamento Legal:</span>
-                                    <span id="eval-fundamento" class="font-bold text-slate-200">Art. 27 LISR / Reglas RESICO</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-800">
-                            <p class="text-xs text-slate-400 mb-3">¿Tienes dudas o necesitas organizar la contabilidad mensual de tu negocio?</p>
-                            <a id="eval-btn-wa" href="https://wa.me/5215500000000?text=Hola%2C%20tengo%20dudas%20sobre%20la%20deductibilidad%20de%20mis%20gastos" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs transition flex items-center justify-center space-x-2">
-                                <i class="fa-brands fa-whatsapp text-sm"></i>
-                                <span>Consultar a un Contador por WhatsApp</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MÓDULO B: CALCULADORA RÁPIDA DE IMPUESTOS -->
-        <section id="calculadora" class="scroll-mt-24">
-            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/80">
-                <div class="max-w-2xl mb-8">
-                    <span class="text-xs font-bold uppercase tracking-wider text-corpBlue-600 bg-blue-50 px-3 py-1 rounded-md">Simulador Fiscal</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Calculadora Estimada de Impuestos Mensuales</h2>
-                    <p class="text-sm text-slate-600 mt-1">Calcula rápidamente tu cobro estimado de ISR e IVA para RESICO o Actividad Empresarial.</p>
+                    <i class="fa-solid fa-building-columns absolute -right-3 -bottom-3 text-7xl text-white/5"></i>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Calculator Inputs -->
-                    <div class="lg:col-span-7 space-y-5">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Régimen Fiscal</label>
-                                <select id="calc-regimen" onchange="calcularImpuestos()" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-corpBlue-500">
-                                    <option value="RESICO">RESICO (Tasa 1% a 2.5%)</option>
-                                    <option value="ACT_EMP">Actividad Empresarial (Tabla ISR)</option>
-                                </select>
+                <!-- Main Modules Grid -->
+                <div>
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2.5">Módulos de Asistencia</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="switchScreen('deducciones')" class="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-left hover:border-emerald-500 transition active:scale-95 group">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base mb-2 group-hover:bg-emerald-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-receipt"></i>
                             </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">¿Público General o Facturado?</label>
-                                <select id="calc-tipo-fact" onchange="calcularImpuestos()" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-medium text-sm focus:ring-2 focus:ring-corpBlue-500">
-                                    <option value="NOMINATIVO">Facturas Nominativas (A Clientes)</option>
-                                    <option value="PUBLICO_GENERAL">Público en General / Sin Factura</option>
-                                </select>
-                            </div>
-                        </div>
+                            <h4 class="font-bold text-slate-900 text-xs">Evaluador Gastos</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5">¿Es deducible tu compra?</p>
+                        </button>
 
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="text-xs font-bold text-slate-700 uppercase tracking-wide">Ingresos Mensuales Facturados (Sin IVA)</label>
-                                <span class="text-xs font-bold text-emerald-600" id="calc-ingresos-val">$35,000 MXN</span>
+                        <button onclick="switchScreen('calculadora')" class="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-left hover:border-emerald-500 transition active:scale-95 group">
+                            <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-base mb-2 group-hover:bg-blue-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-calculator"></i>
                             </div>
-                            <input type="range" id="calc-ingresos" min="1000" max="250000" step="1000" value="35000" oninput="calcularImpuestos()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
-                            <input type="number" id="calc-ingresos-num" value="35000" oninput="sincronizarIngresos(this.value)" class="mt-2 w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-slate-50 font-semibold text-slate-800">
-                        </div>
+                            <h4 class="font-bold text-slate-900 text-xs">Calculadora RESICO</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Calcula ISR e IVA mensual</p>
+                        </button>
 
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="text-xs font-bold text-slate-700 uppercase tracking-wide">Gastos Mensuales con Factura (Sin IVA)</label>
-                                <span class="text-xs font-bold text-corpBlue-600" id="calc-gastos-val">$12,000 MXN</span>
+                        <button onclick="switchScreen('tramites')" class="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-left hover:border-emerald-500 transition active:scale-95 group">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base mb-2 group-hover:bg-amber-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-file-contract"></i>
                             </div>
-                            <input type="range" id="calc-gastos" min="0" max="200000" step="1000" value="12000" oninput="calcularImpuestos()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-corpBlue-600">
-                            <input type="number" id="calc-gastos-num" value="12000" oninput="sincronizarGastos(this.value)" class="mt-2 w-full px-3 py-2 text-sm border border-slate-300 rounded-lg bg-slate-50 font-semibold text-slate-800">
-                        </div>
-                    </div>
+                            <h4 class="font-bold text-slate-900 text-xs">Trámites SAT</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Constancias y opiniones</p>
+                        </button>
 
-                    <!-- Calculator Output Card -->
-                    <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-corpBlue-900 text-white rounded-2xl p-6 flex flex-col justify-between shadow-xl">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Desglose Estimado Mensual</span>
-                            <div class="mt-4 space-y-3">
-                                <div class="flex justify-between items-center pb-2 border-b border-slate-700/80">
-                                    <span class="text-xs text-slate-300">ISR Estimado a Pagar:</span>
-                                    <span id="calc-res-isr" class="text-lg font-bold text-emerald-400">$350 MXN</span>
-                                </div>
-                                <div class="flex justify-between items-center pb-2 border-b border-slate-700/80">
-                                    <span class="text-xs text-slate-300">IVA Cobrado (16%):</span>
-                                    <span id="calc-res-iva-cobrado" class="text-xs font-semibold text-slate-200">$5,600 MXN</span>
-                                </div>
-                                <div class="flex justify-between items-center pb-2 border-b border-slate-700/80">
-                                    <span class="text-xs text-slate-300">Acreditable (IVA de Gastos):</span>
-                                    <span id="calc-res-iva-gastos" class="text-xs font-semibold text-emerald-400">-$1,920 MXN</span>
-                                </div>
-                                <div class="flex justify-between items-center pb-2 border-b border-slate-700/80">
-                                    <span class="text-xs text-slate-300">IVA Neto a Pagar:</span>
-                                    <span id="calc-res-iva-neto" class="text-lg font-bold text-blue-300">$3,680 MXN</span>
-                                </div>
+                        <button onclick="switchScreen('expediente')" class="p-3.5 bg-white rounded-2xl border border-slate-200/90 shadow-sm text-left hover:border-emerald-500 transition active:scale-95 group">
+                            <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base mb-2 group-hover:bg-purple-600 group-hover:text-white transition">
+                                <i class="fa-solid fa-folder-closed"></i>
                             </div>
-
-                            <div class="mt-6 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10">
-                                <p class="text-xs text-slate-300">Total Impuestos Estimados:</p>
-                                <p id="calc-res-total" class="text-3xl font-extrabold text-white mt-1">$4,030 MXN</p>
-                                <p class="text-[10px] text-slate-400 mt-1">*Cálculo referencial sin incluir retenciones de personas morales o saldos a favor previos.</p>
-                            </div>
-                        </div>
-
-                        <button onclick="abrirModalLead('Calculadora Impuestos')" class="mt-6 w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs transition shadow-lg flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-file-signature"></i>
-                            <span>Presentar Declaración con un Contador</span>
+                            <h4 class="font-bold text-slate-900 text-xs">Expediente Digital</h4>
+                            <p class="text-[10px] text-slate-500 mt-0.5">Tus documentos seguros</p>
                         </button>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- MÓDULO C: TRÁMITES EXPRÉS ANTE EL SAT Y GOBIERNO -->
-        <section id="tramites" class="scroll-mt-24">
-            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/80">
-                <div class="max-w-2xl mb-8">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-md">Servicios bajo Demanda</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Trámites Fiscales Exprés sin Citas</h2>
-                    <p class="text-sm text-slate-600 mt-1">Solicita tu documento oficial expedido por el SAT y recíbelo en tu correo o WhatsApp.</p>
+                <!-- Banner Guía SAT -->
+                <div class="p-3.5 bg-emerald-900/10 border border-emerald-500/30 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900">Guía SAT 2026</h4>
+                            <p class="text-[10px] text-slate-600">Requisitos para e.firma y declaraciones</p>
+                        </div>
+                    </div>
+                    <button onclick="openWhatsApp('Hola ACS, me gustaría descargar la Guía SAT 2026.')" class="px-2.5 py-1.5 bg-emerald-600 text-white text-[11px] font-bold rounded-lg shadow hover:bg-emerald-700">
+                        Descargar
+                    </button>
+                </div>
+            </section>
+
+            <!-- PANTALLA 2: EVALUADOR DE DEDUCCIONES -->
+            <section id="screen-deducciones" class="app-screen space-y-4">
+                <div class="border-b border-slate-200 pb-2">
+                    <h2 class="text-base font-extrabold text-slate-900">Evaluador de Gastos Deducibles</h2>
+                    <p class="text-xs text-slate-500">Verifica la validez fiscal de tus facturas y compras</p>
                 </div>
 
-                <!-- Catalog Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                    <!-- Item 1 -->
-                    <div class="border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition shadow-sm hover:shadow-md flex flex-col justify-between bg-slate-50/50">
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
-                                <i class="fa-solid fa-id-card text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-base">Constancia de Situación Fiscal (CSF)</h3>
-                            <p class="text-xs text-slate-500 mt-1">Documento clave con tus datos de alta, régimen fiscal y cédula de identificación.</p>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-3.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Régimen Fiscal</label>
+                        <select id="ded-regimen" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="resico">RESICO (Régimen Simplificado de Confianza)</option>
+                            <option value="empresarial">Actividad Empresarial y Profesional</option>
+                            <option value="sueldos">Sueldos y Salarios / Asimilados</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Categoría del Gasto</label>
+                        <select id="ded-categoria" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="gasolina">Gasolina / Combustible</option>
+                            <option value="salud">Gastos Médicos / Dentales / Hospital</option>
+                            <option value="equipo">Cómputo / Herramientas de Trabajo</option>
+                            <option value="restaurante">Consumo en Restaurantes</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Forma de Pago</label>
+                        <select id="ded-pago" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="tarjeta">Tarjeta Débito / Crédito / Transferencia</option>
+                            <option value="efectivo">Efectivo</option>
+                        </select>
+                    </div>
+
+                    <button onclick="evaluarDeduccion()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved"></i> Evaluar Requisitos SAT
+                    </button>
+
+                    <!-- Evaluation Output Card -->
+                    <div id="ded-resultado" class="hidden p-3.5 rounded-xl border text-xs space-y-1.5"></div>
+
+                    <button onclick="openWhatsApp('Hola, me gustaría recibir asesoría personalizada sobre la deducibilidad de mis facturas.')" class="w-full py-2 bg-slate-900 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-slate-800">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i> Asesoría Estratégica por WhatsApp
+                    </button>
+                </div>
+            </section>
+
+            <!-- PANTALLA 3: CALCULADORA RESICO -->
+            <section id="screen-calculadora" class="app-screen space-y-4">
+                <div class="border-b border-slate-200 pb-2">
+                    <h2 class="text-base font-extrabold text-slate-900">Calculadora de Impuestos RESICO</h2>
+                    <p class="text-xs text-slate-500">Estimación mensual directa de ISR e IVA 2026</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-xs font-bold text-slate-700">Ingresos Mensuales Facturados</label>
+                            <span id="label-ingresos" class="text-xs font-extrabold text-emerald-600">$35,000 MXN</span>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
-                            <span class="text-lg font-extrabold text-slate-900">$120 <span class="text-xs font-medium text-slate-500">MXN</span></span>
-                            <button onclick="seleccionarTramite('Constancia de Situación Fiscal', 120)" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">Solicitar</button>
+                        <input type="range" id="slider-ingresos" min="1000" max="250000" step="1000" value="35000" class="w-full accent-emerald-600 cursor-pointer" oninput="actualizarCalculadora()">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Gastos Facturados del Mes (Sin IVA)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2.5 text-slate-400 text-xs">$</span>
+                            <input type="number" id="input-gastos" value="12000" placeholder="0.00" class="w-full pl-6 pr-3 bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 outline-none" oninput="actualizarCalculadora()">
                         </div>
                     </div>
 
-                    <!-- Item 2 -->
-                    <div class="border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition shadow-sm hover:shadow-md flex flex-col justify-between bg-slate-50/50">
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-blue-100 text-corpBlue-700 flex items-center justify-center font-bold mb-3">
-                                <i class="fa-solid fa-file-shield text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-base">Opinión de Cumplimiento SAT</h3>
-                            <p class="text-xs text-slate-500 mt-1">Verifica si estás en Opinión Positiva o si tienes declaraciones omitidas.</p>
+                    <!-- Breakdown Output -->
+                    <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-2.5 shadow-inner">
+                        <div class="flex justify-between text-xs pb-1.5 border-b border-slate-800">
+                            <span class="text-slate-400">Tasa Aplicable ISR:</span>
+                            <span id="res-tasa" class="font-extrabold text-emerald-400">1.25%</span>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
-                            <span class="text-lg font-extrabold text-slate-900">$120 <span class="text-xs font-medium text-slate-500">MXN</span></span>
-                            <button onclick="seleccionarTramite('Opinión de Cumplimiento SAT', 120)" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">Solicitar</button>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-300">ISR a Pagar Estimado:</span>
+                            <span id="res-isr" class="font-bold text-slate-100">$437.50 MXN</span>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-300">IVA a Pagar Estimado (16%):</span>
+                            <span id="res-iva" class="font-bold text-slate-100">$3,680.00 MXN</span>
+                        </div>
+                        <div class="pt-2 border-t border-slate-800 flex justify-between items-center">
+                            <span class="text-xs font-bold text-emerald-400">Total Impuestos Mensuales:</span>
+                            <span id="res-total" class="text-sm font-extrabold text-emerald-400">$4,117.50 MXN</span>
                         </div>
                     </div>
 
-                    <!-- Item 3 -->
-                    <div class="border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 transition shadow-sm hover:shadow-md flex flex-col justify-between bg-slate-50/50">
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-3">
-                                <i class="fa-solid fa-key text-lg"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-base">Generación / Renovación de CIEC</h3>
-                            <p class="text-xs text-slate-500 mt-1">Recupera o genera tu contraseña de acceso de 8 dígitos al portal del SAT.</p>
+                    <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                        <h4 class="text-xs font-bold text-emerald-900 mb-1">¿Deseas pagar lo justo sin errores?</h4>
+                        <p class="text-[11px] text-emerald-800 mb-2">Presentamos tu declaración mensual y optimizamos tus acreditamientos de IVA.</p>
+                        <button onclick="openWhatsApp('Hola, usé la Calculadora RESICO y quiero cotizar la presentación mensual de mi contabilidad.')" class="w-full py-2 bg-emerald-600 text-white font-bold text-xs rounded-lg hover:bg-emerald-700 transition">
+                            Contratar Servicio Mensual
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 4: CATÁLOGO DE TRÁMITES EXPRESS -->
+            <section id="screen-tramites" class="app-screen space-y-4">
+                <div class="border-b border-slate-200 pb-2">
+                    <h2 class="text-base font-extrabold text-slate-900">Trámites SAT Express</h2>
+                    <p class="text-xs text-slate-500">Gestión garantizada con envío a tu correo / WhatsApp</p>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="space-y-3">
+                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-sm flex justify-between items-center">
+                        <div class="space-y-0.5">
+                            <span class="text-[9px] font-extrabold px-1.5 py-0.5 bg-emerald-100 text-emerald-800 rounded">Mismo Día</span>
+                            <h3 class="font-bold text-xs text-slate-900">Constancia de Situación Fiscal</h3>
+                            <p class="text-[10px] text-slate-500">Requisito obligatorio para facturación 4.0</p>
+                            <p class="text-emerald-700 font-extrabold text-xs">$150 MXN</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
-                            <span class="text-lg font-extrabold text-slate-900">$250 <span class="text-xs font-medium text-slate-500">MXN</span></span>
-                            <button onclick="seleccionarTramite('Generación / Renovación CIEC', 250)" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">Solicitar</button>
+                        <button onclick="seleccionarTramite('Constancia de Situación Fiscal', 150)" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-emerald-600 transition">
+                            Solicitar
+                        </button>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-sm flex justify-between items-center">
+                        <div class="space-y-0.5">
+                            <span class="text-[9px] font-extrabold px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded">Urgente</span>
+                            <h3 class="font-bold text-xs text-slate-900">Opinión de Cumplimiento (32-D)</h3>
+                            <p class="text-[10px] text-slate-500">Estatus positivo/negativo ante el SAT</p>
+                            <p class="text-emerald-700 font-extrabold text-xs">$150 MXN</p>
                         </div>
+                        <button onclick="seleccionarTramite('Opinión de Cumplimiento (32-D)', 150)" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-emerald-600 transition">
+                            Solicitar
+                        </button>
+                    </div>
+
+                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-sm flex justify-between items-center">
+                        <div class="space-y-0.5">
+                            <h3 class="font-bold text-xs text-slate-900">Alta o Cambio de Régimen</h3>
+                            <p class="text-[10px] text-slate-500">Actualización de actividades primarias</p>
+                            <p class="text-emerald-700 font-extrabold text-xs">$450 MXN</p>
+                        </div>
+                        <button onclick="seleccionarTramite('Alta o Cambio de Régimen', 450)" class="px-3 py-1.5 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-emerald-600 transition">
+                            Solicitar
+                        </button>
                     </div>
                 </div>
 
-                <!-- Interactive Service Checkout Form -->
-                <div id="tramite-form-card" class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
-                        <i class="fa-solid fa-cart-shopping text-emerald-600"></i>
-                        <span>Solicitud de Trámite: <span id="tramite-seleccionado-nombre" class="text-emerald-600">Constancia de Situación Fiscal</span></span>
+                <!-- Interactive Checkout Box -->
+                <div id="checkout-box" class="hidden bg-white p-4 rounded-2xl border-2 border-emerald-500 shadow-md space-y-3">
+                    <div class="flex justify-between items-center border-b pb-1.5">
+                        <h4 class="font-bold text-xs text-slate-900" id="checkout-titulo">Completar Datos del Trámites</h4>
+                        <button onclick="ocultarCheckout()" class="text-slate-400 text-sm hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <input type="text" id="chk-nombre" placeholder="Nombre Completo" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="text" id="chk-rfc" placeholder="RFC con Homoclave" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs uppercase outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="password" id="chk-ciec" placeholder="Contraseña CIEC (SAT)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500">
+                        
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">Método de Pago</label>
+                            <select id="chk-metodo" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs outline-none">
+                                <option value="Mercado Pago">Mercado Pago / Tarjeta</option>
+                                <option value="Transferencia SPEI">Transferencia SPEI Directa</option>
+                            </select>
+                        </div>
+
+                        <button onclick="procesarTramiteExpress()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition">
+                            Pagar y Confirmar Trámites
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANTALLA 5: EXPEDIENTE DIGITAL & CONTACTO -->
+            <section id="screen-expediente" class="app-screen space-y-4">
+                <div class="border-b border-slate-200 pb-2">
+                    <h2 class="text-base font-extrabold text-slate-900">Expediente Digital & Contacto</h2>
+                    <p class="text-xs text-slate-500">Repositorio de documentos y atención directa</p>
+                </div>
+
+                <!-- Digital Vault Simulation -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+                    <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-vault text-emerald-600"></i> Repositorio de Documentos
                     </h3>
-
-                    <form id="form-tramite" onsubmit="procesarSolicitudTramite(event)" class="space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo</label>
-                                <input type="text" required placeholder="Ej. Juan Pérez González" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500">
+                    <div class="space-y-2">
+                        <div class="p-2.5 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-200">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-red-500 text-base"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Constancia_Situacion_Fiscal.pdf</p>
+                                    <p class="text-[9px] text-slate-400">Actualizado recientemente</p>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">RFC con Homoclave</label>
-                                <input type="text" required placeholder="Ej. PEGJ900101XXX" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 uppercase">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">WhatsApp de Contacto</label>
-                                <input type="tel" required placeholder="Ej. 5512345678" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico</label>
-                                <input type="email" required placeholder="correo@ejemplo.com" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500">
-                            </div>
+                            <button onclick="alert('Descargando copia segura de tu Constancia fiscal...')" class="text-xs text-emerald-600 font-bold px-2 py-1 bg-emerald-50 rounded-lg">Ver</button>
                         </div>
 
-                        <!-- Simulated File Drag & Drop -->
-                        <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center bg-white hover:bg-slate-50 transition cursor-pointer">
-                            <i class="fa-solid fa-cloud-arrow-up text-slate-400 text-2xl mb-1"></i>
-                            <p class="text-xs font-semibold text-slate-700">Arrastra o adjunta copia de tu INE / Identificación (Opcional)</p>
-                            <p class="text-[10px] text-slate-400">PDF, JPG o PNG máximo 10MB</p>
-                        </div>
-
-                        <!-- Payment & Execution Control -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-slate-200 gap-4">
-                            <div>
-                                <span class="text-xs text-slate-500 block">Total a Pagar:</span>
-                                <span id="tramite-precio-total" class="text-2xl font-extrabold text-slate-900">$120 MXN</span>
+                        <div class="p-2.5 bg-slate-50 rounded-xl flex items-center justify-between border border-slate-200">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-red-500 text-base"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Opinion_Cumplimiento.pdf</p>
+                                    <p class="text-[9px] text-slate-400">Estatus: Positivo</p>
+                                </div>
                             </div>
-
-                            <div class="flex items-center space-x-3 w-full sm:w-auto">
-                                <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-md flex items-center justify-center space-x-2">
-                                    <i class="fa-solid fa-credit-card"></i>
-                                    <span>Pagar y Procesar Trámite</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- Real-time Order Simulation Output -->
-                    <div id="status-tramite-box" class="hidden mt-6 bg-slate-900 text-white p-6 rounded-2xl space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Estatus del Trámite en Tiempo Real</span>
-                            <span id="badge-status-tramite" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">En Proceso</span>
-                        </div>
-
-                        <div class="space-y-2 text-xs">
-                            <p id="step-1" class="text-emerald-400"><i class="fa-solid fa-circle-check mr-2"></i> Pago confirmado mediante Pasarela Segura.</p>
-                            <p id="step-2" class="text-slate-300"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Conectando con servidor del SAT / Generando solicitud...</p>
-                            <p id="step-3" class="text-slate-500"><i class="fa-solid fa-circle text-[8px] mr-2"></i> Documento oficial listo para descarga.</p>
-                        </div>
-
-                        <div id="download-delivery-btn" class="hidden pt-2">
-                            <button onclick="descargarCFDIPdfSimulado()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs transition flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-file-arrow-down"></i>
-                                <span>Descargar Documento Oficial PDF</span>
-                            </button>
+                            <button onclick="alert('Descargando copia de tu Opinión de Cumplimiento 32-D...')" class="text-xs text-emerald-600 font-bold px-2 py-1 bg-emerald-50 rounded-lg">Ver</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- MÓDULO D: GUÍA DE DESPLIEGUE GRATUITO $0 MXN -->
-        <section id="despliegue" class="scroll-mt-24">
-            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-corpBlue-900 rounded-3xl p-6 sm:p-10 text-white shadow-2xl">
-                <div class="max-w-2xl mb-8">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-md border border-emerald-500/20">Guía Técnica de Implementación</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">¿Dónde y Cómo Alojamiento esta App GRATIS ($0 MXN)?</h2>
-                    <p class="text-xs sm:text-sm text-slate-300 mt-1">Opciones 100% gratuitas para mantener este sistema activo sin pagar servidores mensuales.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Option 1 -->
-                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">1</div>
-                            <h3 class="font-bold text-white text-sm">GitHub Pages</h3>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            Ideal para este prototipo en HTML/JS. Subes el archivo <code class="bg-slate-900 px-1 py-0.5 rounded text-emerald-400">index.html</code> a un repositorio público de GitHub y activas Pages. Tienes SSL gratis y tráfico ilimitado.
-                        </p>
+                <!-- Contact Info Card -->
+                <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Asesores Contables Sánchez</h3>
+                    <p class="text-xs text-slate-300">Despacho especializado en contabilidad general, impuestos y trámites gubernamentales.</p>
+                    
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-emerald-400"></i> Manzanillo, Colima, México.</p>
+                        <p class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Atención directa por WhatsApp</p>
+                        <p class="flex items-center gap-2"><i class="fa-regular fa-clock text-emerald-400"></i> Lunes a Viernes: 9:00 - 18:00 hrs</p>
                     </div>
 
-                    <!-- Option 2 -->
-                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="w-8 h-8 rounded-lg bg-corpBlue-500/20 text-corpBlue-400 flex items-center justify-center font-bold">2</div>
-                            <h3 class="font-bold text-white text-sm">Vercel / Render</h3>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            Si agregas lógica avanzada en Python o Node.js para conectar APIs del SAT o pasarelas de cobro complejas. Cuentan con planes "Hobby" completamente gratuitos.
-                        </p>
-                    </div>
-
-                    <!-- Option 3 -->
-                    <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">3</div>
-                            <h3 class="font-bold text-white text-sm">Streamlit Cloud</h3>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            Si prefieres construir toda la app usando solo código Python en lugar de HTML. Despliegue directo desde GitHub en un clic sin configurar servidores.
-                        </p>
-                    </div>
+                    <button onclick="openWhatsApp('Hola Asesores Contables Sánchez, requiero información sobre sus servicios.')" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Contactar por WhatsApp
+                    </button>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+        </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-                <div class="flex items-center space-x-2 text-white font-bold text-lg mb-3">
-                    <div class="w-8 h-8 rounded-lg custom-gradient flex items-center justify-center text-white text-sm">ACS</div>
-                    <span>Asesores Contables Sánchez</span>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    Firma especializada en estrategias fiscales, contabilidad mensual para RESICO, personas físicas y trámites digitales ante el SAT.
-                </p>
-            </div>
-
-            <div>
-                <h4 class="text-sm font-bold text-white mb-3">Enlaces Rápidos</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><button onclick="scrollToSection('evaluador')" class="hover:text-emerald-400">Check de Gastos SAT</button></li>
-                    <li><button onclick="scrollToSection('calculadora')" class="hover:text-emerald-400">Calculadora Impuestos RESICO</button></li>
-                    <li><button onclick="scrollToSection('tramites')" class="hover:text-emerald-400">Trámites Exprés</button></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-sm font-bold text-white mb-3">Recurso Gratuito (Lead Magnet)</h4>
-                <p class="text-xs text-slate-400 mb-3">Descarga nuestra Guía Fiscal SAT en PDF para emprendedores.</p>
-                <button onclick="descargarGuiaSAT()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs border border-slate-700 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-file-pdf text-emerald-400"></i>
-                    <span>Descargar Guía SAT 2026 (PDF)</span>
+        <!-- Fixed Native Bottom Navigation Bar -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-2 py-2 z-50">
+            <div class="flex justify-around items-center">
+                <button onclick="switchScreen('inicio')" id="nav-inicio" class="nav-item flex flex-col items-center text-emerald-400 transition">
+                    <i class="fa-solid fa-house text-base"></i>
+                    <span class="text-[9px] font-semibold mt-0.5">Inicio</span>
+                </button>
+                <button onclick="switchScreen('deducciones')" id="nav-deducciones" class="nav-item flex flex-col items-center text-slate-400 transition hover:text-slate-200">
+                    <i class="fa-solid fa-receipt text-base"></i>
+                    <span class="text-[9px] font-semibold mt-0.5">Deducción</span>
+                </button>
+                <button onclick="switchScreen('calculadora')" id="nav-calculadora" class="nav-item flex flex-col items-center text-slate-400 transition hover:text-slate-200">
+                    <i class="fa-solid fa-calculator text-base"></i>
+                    <span class="text-[9px] font-semibold mt-0.5">RESICO</span>
+                </button>
+                <button onclick="switchScreen('tramites')" id="nav-tramites" class="nav-item flex flex-col items-center text-slate-400 transition hover:text-slate-200">
+                    <i class="fa-solid fa-bolt text-base"></i>
+                    <span class="text-[9px] font-semibold mt-0.5">Trámites</span>
+                </button>
+                <button onclick="switchScreen('expediente')" id="nav-expediente" class="nav-item flex flex-col items-center text-slate-400 transition hover:text-slate-200">
+                    <i class="fa-solid fa-folder-open text-base"></i>
+                    <span class="text-[9px] font-semibold mt-0.5">Expediente</span>
                 </button>
             </div>
-        </div>
+        </nav>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-800 text-center text-xs text-slate-500">
-            © 2026 Asesores Contables Sánchez. Todos los derechos reservados.
-        </div>
-    </footer>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/5215500000000?text=Hola%2C%20necesito%20asesor%C3%ADa%20contable%20para%20mi%20negocio." target="_blank" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl hover:bg-emerald-600 transition transform hover:scale-105">
-        <i class="fa-brands fa-whatsapp text-3xl"></i>
-    </a>
-
-    <!-- LEAD MODAL -->
-    <div id="modal-lead" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
-                <h3 class="font-bold text-slate-900 text-base">Consulta Contable Personalizada</h3>
-                <button onclick="cerrarModalLead()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <p class="text-xs text-slate-600 mb-4">Ingresa tus datos y un contador de nuestro equipo revisará tu caso en menos de 15 minutos.</p>
-            
-            <form onsubmit="enviarLeadModal(event)" class="space-y-3">
-                <input type="text" required placeholder="Tu Nombre Completo" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
-                <input type="tel" required placeholder="Número de WhatsApp" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
-                <select class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-700">
-                    <option>RESICO</option>
-                    <option>Actividad Empresarial</option>
-                    <option>Sueldos y Salarios</option>
-                </select>
-                <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md">
-                    Solicitar Diagnóstico Fiscal
-                </button>
-            </form>
-        </div>
     </div>
 
-    <!-- JAVASCRIPT APP LOGIC -->
     <script>
-        // Smooth Scroll Helper
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        // Update Phone Clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Multi-Screen Tab Switcher
+        function switchScreen(screenId) {
+            // Hide all app screens
+            const screens = document.querySelectorAll('.app-screen');
+            screens.forEach(s => s.classList.remove('active'));
+
+            // Show target screen
+            const target = document.getElementById('screen-' + screenId);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Update navigation icons
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('text-emerald-400');
+                item.classList.add('text-slate-400');
+            });
+
+            const activeNav = document.getElementById('nav-' + screenId);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400');
+                activeNav.classList.add('text-emerald-400');
+            }
+
+            // Scroll to top of main container
+            document.getElementById('main-content').scrollTop = 0;
         }
 
-        // Toggle Mobile Menu
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
+        // Deductible Expense Checker Function
+        function evaluarDeduccion() {
+            const regimen = document.getElementById('ded-regimen').value;
+            const categoria = document.getElementById('ded-categoria').value;
+            const pago = document.getElementById('ded-pago').value;
+            const res = document.getElementById('ded-resultado');
 
-        // --- MODULE A: DEDUCTIBILITY CHECKER LOGIC ---
-        function calcularDeductibilidad() {
-            const regimen = document.getElementById('eval-regimen').value;
-            const categoria = document.getElementById('eval-categoria').value;
-            const pago = document.querySelector('input[name="eval-pago"]:checked').value;
-
-            const badge = document.getElementById('eval-badge');
-            const titulo = document.getElementById('eval-titulo');
-            const descripcion = document.getElementById('eval-descripcion');
-            const cfdi = document.getElementById('eval-cfdi');
-            const riesgo = document.getElementById('eval-riesgo');
-            const fundamento = document.getElementById('eval-fundamento');
+            res.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-900', 'bg-amber-50', 'border-amber-200', 'text-amber-900');
 
             if (pago === 'efectivo' && categoria === 'gasolina') {
-                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30";
-                badge.textContent = "NO DEDUCIBLE";
-                titulo.textContent = "Gasolina Pagada en Efectivo No es Deducible";
-                descripcion.textContent = "Por disposición del SAT (Art. 27 LISR), el combustible siempre debe pagarse con tarjeta, transferencia o monedero electrónico autorizado, sin importar el monto.";
-                cfdi.textContent = "G03 - Gastos en general";
-                riesgo.textContent = "Alto (Rechazo Automático)";
-                fundamento.textContent = "Art. 27 Fracc. III LISR";
-            } else if (regimen === 'RESICO' && categoria !== 'medicos') {
-                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30";
-                badge.textContent = "INFORMATIVO RESICO";
-                titulo.textContent = "No reduce tu ISR pero requiere factura para IVA";
-                descripcion.textContent = "En RESICO el ISR se calcula directo sobre tus ingresos cobrados. Sin embargo, requerirás esta factura para acreditar y disminuir el IVA a pagar.";
-                cfdi.textContent = "G03 - Gastos en general";
-                riesgo.textContent = "Bajo";
-                fundamento.textContent = "Art. 113-E LISR / Ley del IVA";
-            } else if (pago === 'efectivo') {
-                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30";
-                badge.textContent = "LÍMITE $2,000 MXN";
-                titulo.textContent = "Deducible Solo si es Menor a $2,000 MXN";
-                descripcion.textContent = "Los pagos en efectivo solo son deducibles si el total con IVA no supera los $2,000.00 MXN.";
-                cfdi.textContent = "G03 - Gastos en general";
-                riesgo.textContent = "Medio";
-                fundamento.textContent = "Art. 27 Fracc. III LISR";
+                res.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-900');
+                res.innerHTML = '<strong>❌ No Deducible:</strong> El consumo de gasolina en efectivo NO es deducible ante el SAT. Requiere tarjeta de débito/crédito, transferencia o monedero electrónico autorizado.';
+                return;
+            }
+
+            if (regimen === 'resico') {
+                res.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                res.innerHTML = '<strong>ℹ️ Información RESICO:</strong> En ISR los gastos no restan a la base gravable (tasa directa reducida), pero el gasto sí te permite acreditar e incentivar el IVA facturado.';
             } else {
-                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
-                badge.textContent = "100% DEDUCIBLE";
-                titulo.textContent = "Gasto Totalmente Deducible";
-                descripcion.textContent = "Cumple con los requisitos fiscales: forma de pago bancarizada y relación directa con la actividad económica.";
-                cfdi.textContent = categoria === 'medicos' ? "D01 - Honorarios médicos" : "G03 - Gastos en general";
-                riesgo.textContent = "Bajo";
-                fundamento.textContent = "Art. 27 LISR / CFF";
+                res.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                res.innerHTML = '<strong>✅ 100% Deducible:</strong> El gasto cumple con las normas del SAT. Solicita tu factura (CFDI) con la clave de uso adecuada.';
             }
         }
 
-        // --- MODULE B: TAX CALCULATOR LOGIC ---
-        function sincronizarIngresos(val) {
-            document.getElementById('calc-ingresos').value = val;
-            calcularImpuestos();
-        }
-        function sincronizarGastos(val) {
-            document.getElementById('calc-gastos').value = val;
-            calcularImpuestos();
-        }
+        // RESICO Calculator
+        function actualizarCalculadora() {
+            const ingresos = parseFloat(document.getElementById('slider-ingresos').value) || 0;
+            const gastos = parseFloat(document.getElementById('input-gastos').value) || 0;
 
-        function calcularImpuestos() {
-            const regimen = document.getElementById('calc-regimen').value;
-            const ingresos = parseFloat(document.getElementById('calc-ingresos').value) || 0;
-            const gastos = parseFloat(document.getElementById('calc-gastos').value) || 0;
+            document.getElementById('label-ingresos').innerText = '$' + ingresos.toLocaleString('es-MX') + ' MXN';
 
-            document.getElementById('calc-ingresos-val').textContent = `$${ingresos.toLocaleString('es-MX')} MXN`;
-            document.getElementById('calc-gastos-val').textContent = `$${gastos.toLocaleString('es-MX')} MXN`;
+            let tasaISR = 0.01;
+            if (ingresos > 208333) tasaISR = 0.025;
+            else if (ingresos > 83333) tasaISR = 0.02;
+            else if (ingresos > 50000) tasaISR = 0.015;
+            else if (ingresos > 25000) tasaISR = 0.0125;
 
-            let isr = 0;
-            if (regimen === 'RESICO') {
-                if (ingresos <= 25000) isr = ingresos * 0.01;
-                else if (ingresos <= 50000) isr = ingresos * 0.011;
-                else if (ingresos <= 83333) isr = ingresos * 0.015;
-                else if (ingresos <= 208333) isr = ingresos * 0.02;
-                else isr = ingresos * 0.025;
-            } else {
-                const utilidad = Math.max(0, ingresos - gastos);
-                isr = utilidad * 0.16; // Tasa promedio ponderada estimada
-            }
-
+            const isr = ingresos * tasaISR;
             const ivaCobrado = ingresos * 0.16;
-            const ivaGastos = gastos * 0.16;
-            const ivaNeto = Math.max(0, ivaCobrado - ivaGastos);
-            const totalImpuestos = isr + ivaNeto;
+            const ivaPagado = gastos * 0.16;
+            const ivaPagar = Math.max(0, ivaCobrado - ivaPagado);
+            const total = isr + ivaPagar;
 
-            document.getElementById('calc-res-isr').textContent = `$${Math.round(isr).toLocaleString('es-MX')} MXN`;
-            document.getElementById('calc-res-iva-cobrado').textContent = `$${Math.round(ivaCobrado).toLocaleString('es-MX')} MXN`;
-            document.getElementById('calc-res-iva-gastos').textContent = `-$${Math.round(ivaGastos).toLocaleString('es-MX')} MXN`;
-            document.getElementById('calc-res-iva-neto').textContent = `$${Math.round(ivaNeto).toLocaleString('es-MX')} MXN`;
-            document.getElementById('calc-res-total').textContent = `$${Math.round(totalImpuestos).toLocaleString('es-MX')} MXN`;
+            document.getElementById('res-tasa').innerText = (tasaISR * 100).toFixed(2) + '%';
+            document.getElementById('res-isr').innerText = '$' + isr.toLocaleString('es-MX', {minimumFractionDigits: 2}) + ' MXN';
+            document.getElementById('res-iva').innerText = '$' + ivaPagar.toLocaleString('es-MX', {minimumFractionDigits: 2}) + ' MXN';
+            document.getElementById('res-total').innerText = '$' + total.toLocaleString('es-MX', {minimumFractionDigits: 2}) + ' MXN';
         }
 
-        // --- MODULE C: SERVICE CHECKOUT SIMULATION ---
-        let tramiteActualPrecio = 120;
-
+        // Express Trámite Checkout Flow
+        let tramiteSeleccionado = { nombre: '', precio: 0 };
         function seleccionarTramite(nombre, precio) {
-            document.getElementById('tramite-seleccionado-nombre').textContent = nombre;
-            document.getElementById('tramite-precio-total').textContent = `$${precio} MXN`;
-            tramiteActualPrecio = precio;
-            scrollToSection('tramite-form-card');
+            tramiteSeleccionado = { nombre, precio };
+            document.getElementById('checkout-titulo').innerText = `${nombre} ($${precio} MXN)`;
+            document.getElementById('checkout-box').classList.remove('hidden');
+            document.getElementById('checkout-box').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function procesarSolicitudTramite(e) {
-            e.preventDefault();
-            const statusBox = document.getElementById('status-tramite-box');
-            const step2 = document.getElementById('step-2');
-            const step3 = document.getElementById('step-3');
-            const downloadBtn = document.getElementById('download-delivery-btn');
-            const badge = document.getElementById('badge-status-tramite');
-
-            statusBox.classList.remove('hidden');
-            badge.textContent = "Procesando";
-            badge.className = "px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30";
-
-            setTimeout(() => {
-                step2.innerHTML = `<i class="fa-solid fa-circle-check mr-2 text-emerald-400"></i> Solicitud validada en portal SAT. Documento generado.`;
-                step3.innerHTML = `<i class="fa-solid fa-circle-check mr-2 text-emerald-400"></i> Entrega completada y enviada por correo.`;
-                badge.textContent = "Completado";
-                badge.className = "px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
-                downloadBtn.classList.remove('hidden');
-            }, 2500);
+        function ocultarCheckout() {
+            document.getElementById('checkout-box').classList.add('hidden');
         }
 
-        function descargarCFDIPdfSimulado() {
-            const contenido = "ASESORES CONTABLES SANCHEZ\nDocumento Oficial Expedido por el SAT\nEstatus: Opinión Positiva / Constancia Validada\nFecha de emisión: 2026";
-            const blob = new Blob([contenido], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'Documento_Oficial_SAT_ACS.txt';
-            a.click();
+        function procesarTramiteExpress() {
+            const nombre = document.getElementById('chk-nombre').value;
+            const rfc = document.getElementById('chk-rfc').value;
+            const metodo = document.getElementById('chk-metodo').value;
+
+            if (!nombre || !rfc) {
+                alert('Por favor ingresa tu nombre y RFC.');
+                return;
+            }
+
+            const mensaje = encodeURIComponent(`Hola Asesores Contables Sánchez, solicito el trámite: ${tramiteSeleccionado.nombre} ($${tramiteSeleccionado.precio} MXN).\nNombre: ${nombre}\nRFC: ${rfc}\nMétodo de pago: ${metodo}`);
+            window.open(`https://wa.me/?text=${mensaje}`, '_blank');
+            ocultarCheckout();
         }
 
-        function descargarGuiaSAT() {
-            const contenido = "GUIA FISCAL 2026 PARA EMPRENDEDORES - ASESORES CONTABLES SANCHEZ\n\n1. RESICO: Beneficios y tasas reducidas.\n2. Deducciones autorizadas.\n3. Evita discrepancias fiscales.";
-            const blob = new Blob([contenido], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'Guia_SAT_2026_ACS.txt';
-            a.click();
+        function openWhatsApp(msg) {
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // --- LEAD MODAL LOGIC ---
-        function abrirModalLead(origen) {
-            document.getElementById('modal-lead').classList.remove('hidden');
-        }
-        function cerrarModalLead() {
-            document.getElementById('modal-lead').classList.add('hidden');
-        }
-        function enviarLeadModal(e) {
-            e.preventDefault();
-            alert("¡Gracias por registrarte! Un contador de Asesores Contables Sánchez se pondrá en contacto contigo de inmediato vía WhatsApp.");
-            cerrarModalLead();
-        }
-
-        // Initialize default states on load
+        // Initialize on load
         window.onload = function() {
-            calcularDeductibilidad();
-            calcularImpuestos();
-        };
+            actualizarCalculadora();
+        }
     </script>
 </body>
 </html>
